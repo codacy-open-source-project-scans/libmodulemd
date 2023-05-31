@@ -1,0 +1,24 @@
+specfile_path: fedora/libmodulemd.spec
+upstream_package_name: libmodulemd
+upstream_project_url: https://github.com/fedora-modularity/libmodulemd
+downstream_package_name: libmodulemd
+
+actions:
+  get-current-version: ./get_version.sh
+
+synced_files:
+  - fedora/
+  - .packit.yaml
+
+jobs:
+- job: sync_from_downstream
+  trigger: commit
+
+- job: copr_build
+  trigger: pull_request
+  metadata:
+    targets:
+    - fedora-all
+    - epel-7
+    - epel-8
+    - centos-stream-9
